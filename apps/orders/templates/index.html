@@ -1,0 +1,120 @@
+{% extends 'default.html' %}
+{% load static %}
+{% block content %}
+<div class="content">
+    <div class="container-fluid">
+        <div class="page-title-box">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <h4 class="page-title">{{singular_name}}</h4>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-right">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);">Stexo</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'orders.index' %}">{{plural_name}}</a></li>
+                        <li class="breadcrumb-item active">All {{plural_name}}</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- end row -->
+        </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <a href="{% url 'orders.add' %}">
+                            <h4 class="btn btn-primary mt-0 header-title mb-4">Add {{singular_name}}</h4>
+                        </a>
+                        <!-- <div class="text-right">
+                            <a href="{% url 'orders.add_category' %}">
+                                <h4 class="btn btn-primary mt-0 header-title mb-4">Add Category</h4>
+                            </a>
+                        </div> -->
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Stock</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Created Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if page_obj %}
+                                    {% for product in page_obj %}
+
+                                    <tr>
+                                        <td>{{product.user}}</td>
+                                        <td>{{product.name}}</td>
+                                        <td>{{product.description}}</td>
+                                        <td>{{product.price}}</td>
+                                        <td><span class="badge badge-success">{{product.stock}}</span></td>
+                                        <td>{{product.categories}}</td>
+                                        <td>{{product.created_at | date:'d-M-Y' }}</td>
+
+                                        <td>
+                                            <span>
+                                                <a href="{% url 'product.edit' product.id %}"
+                                                    class="btn btn-primary btn-sm">Edit
+                                                </a>
+                                            </span>
+                                            <span>
+                                                <a href="{% url 'product.view' product.id %}"
+                                                    class="btn btn-success btn-sm">View
+                                                </a>
+                                            </span>
+                                            <span>
+                                                <a href="{% url 'product.delete' product.id %}"
+                                                    class="btn btn-danger btn-sm confirmDelete">Delete
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    {% endfor %}
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="6" style="text-align:center;"> Record not found.</td>
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% include "pagination.html" %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".confirmDelete").click(function (e) {
+            e.stopImmediatePropagation();
+            url = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Want to delete this ?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it",
+                cancelButtonText: "No, cancel",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.value) {
+                    window.location.replace(url);
+                }
+            });
+            e.preventDefault();
+        });
+    });
+
+</script>
+{% endblock content %}
