@@ -1,6 +1,6 @@
 from apps.product.models import Product
 from apps.users.models import User
-from apps.shipping_cart.models import Cart
+# from apps.shipping_cart.models import Cart
 
 class Carts():
     def __init__(self, request):

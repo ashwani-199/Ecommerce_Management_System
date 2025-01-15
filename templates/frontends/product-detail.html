@@ -124,10 +124,11 @@
 									</div>
 								</div>
 
-								<button value="{{productObj.id}}" id="add-cart"
+								<a href="{% url 'add_to_cart' productObj.id %}" value="{{productObj.id}}"
 									class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
 									Add to cart
-								</button>
+								</a>
+
 							</div>
 						</div>
 						{% endif %}
@@ -387,8 +388,7 @@
 
 			success: function (json) {
 				console.log(json)
-				// document.getElementById
-				document.getElementById("cart-quantity").textContent = json.qty
+				document.getElementsByClassName("cart-quantity").textContent = json.qty
 			},
 			error: function (xhr, errmsg, err) {
 

@@ -1,7 +1,7 @@
 from django.db import models
 from apps.product.models import Product
 from apps.users.models import User
-from apps.shipping_cart.models import Cart
+# from apps.shipping_cart.models import Cart
 
 STATUS =(
         ('Pending','Pending'),
@@ -15,7 +15,7 @@ class Order(models.Model):
     total_amount = models.DecimalField(max_digits=100, decimal_places=3)
     status = models.CharField(max_length=50,null=True,choices=STATUS)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    # cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     shipping_date = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from apps.product.serializers import ProductSerializers
 from apps.users.models import User
 from django.contrib.auth.hashers import make_password
+from fronts.home.models import Cart, CartItem
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -148,3 +150,55 @@ def product_review(request):
         response = JsonResponse(context)
         return response
     
+
+
+
+
+@login_required
+def cart_detail(request):
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    cart_items = CartItem.objects.filter(cart=cart)
+
+    print(cart_items)
+
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+    }
+    return render(request, 'frontends/cart_details.html', context)
+
+@login_required
+def add_to_cart(request, product_id):
+    product = Product.objects.get(id=product_id)
+    cart, created = Cart.objects.get_or_create(user=request.user)
+
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+    if not created:  # If the item already exists in the cart, update the quantity
+        cart_item.quantity += 1
+        cart_item.save()
+
+    return redirect('cart_detail')
+
+@login_required
+def remove_from_cart(request, product_id):
+    cart = Cart.objects.get(user=request.user)
+    cart_item = CartItem.objects.get(cart=cart, product__id=product_id)
+    cart_item.delete()
+    return redirect('cart_detail')
+
+@login_required
+def update_cart_item(request, product_id):
+    if request.method == 'POST':
+        new_quantity = int(request.POST.get('quantity'))
+        cart = Cart.objects.get(user=request.user)
+        cart_item = CartItem.objects.get(cart=cart, product__id=product_id)
+
+        if new_quantity > 0:
+            cart_item.quantity = new_quantity
+            cart_item.save()
+        else:
+            cart_item.delete()
+
+    return redirect('cart_detail')

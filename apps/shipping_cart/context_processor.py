@@ -1,5 +1,5 @@
-from apps.shipping_cart.cart import Cart
+# from apps.shipping_cart.cart import Cart
 
-def cart(request):
+# def cart(request):
     
-    return {'cart': Cart(request)}
+#     return {'cart': Cart(request)}
