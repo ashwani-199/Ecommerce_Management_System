@@ -260,8 +260,8 @@
 		</div>
 
 		<div class="row isotope-grid">
-			{% for item in product_results %}
-			{% if item.is_sale %}
+			{% for productObj in product_results %}
+			{% if productObj.is_sale %}
 			<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
 				<!-- Block2 -->
 				<div class="block2">
@@ -270,23 +270,23 @@
 							style="top:0.5rem; right:0.5rem">
 							Sale
 						</div>
-						<img src="{{item.image.url}}" alt="{{item.name}}">
+						<img src="{{productObj.image.url}}" alt="{{productObj.name}}">
 
-						<a href="{% url 'home.product_details' item.id %}"
-							class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 quick-view">
+						<a href="{% url 'home.product_details' productObj.id %}"
+							class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 ">
 							Quick View
 						</a>
 					</div>
 					<div class="block2-txt flex-w flex-t p-t-14">
 						<div class="block2-txt-child1 flex-col-l ">
 							<p class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-								{{item.name}}
+								{{productObj.name}}
 							</p>
 
 							<span class="stext-105 cl3">
-								<strike>Rs {{item.price}}</strike>
+								<strike>Rs {{productObj.price}}</strike>
 								&nbsp;
-								Rs {{item.sale_price}}
+								Rs {{productObj.sale_price}}
 							</span>
 							<div class="d-flex justify-content-center small text-warning mb-2">
 								<div class="zmdi zmdi-star"></div>
@@ -297,7 +297,7 @@
 
 						<div class="block2-txt-child2 flex-r p-t-3">
 							<span class="stext-105 cl3 m-4">
-								<span class="text-success">{{item.stock}}</span>
+								<span class="text-success">{{productObj.stock}}</span>
 
 							</span>
 							<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
@@ -315,21 +315,21 @@
 				<div class="block2">
 
 					<div class="block2-pic hov-img0">
-						<img src="{{item.image.url}}" alt="{{item.name}}">
+						<img src="{{productObj.image.url}}" alt="{{productObj.name}}">
 
-						<a href="{% url 'home.product_details' item.id %}"
-							class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+						<a href="{% url 'home.product_details' productObj.id %}"
+							class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
 							Quick View
 						</a>
 					</div>
 					<div class="block2-txt flex-w flex-t p-t-14">
 						<div class="block2-txt-child1 flex-col-l ">
 							<p class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-								{{item.name}}
+								{{productObj.name}}
 							</p>
 
 							<span class="stext-105 cl3">
-								Rs {{item.price}}
+								Rs {{productObj.price}}
 							</span>
 						</div>
 
@@ -347,13 +347,6 @@
 			{% endif %}
 			{% endfor %}
 		</div>
-
-		<!-- Load more -->
-		<!-- <div class="flex-c-m flex-w w-full p-t-45">
-			<a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-				Load More
-			</a>
-		</div> -->
 	</div>
 </div>
 {% endblock %}

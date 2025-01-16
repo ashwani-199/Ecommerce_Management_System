@@ -20,6 +20,8 @@
         </span>
     </div>
 </div>
+<br>
+<br>
 
 
 <!-- Shoping Cart -->
@@ -214,27 +216,3 @@
     </div>
 </div>
 {% endblock %}
-
-
-
-<h1>Your Shopping Cart</h1>
-
-{% if cart.cartitem_set.count == 0 %}
-<p>Your cart is empty!</p>
-{% else %}
-<ul>
-    {% for item in cart.cartitem_set.all %}
-    <li>
-        {{ item.product.name }} - {{ item.quantity }} x ${{ item.product.price }}
-        = ${{ item.get_total_price }}
-        <a href="{% url 'remove_from_cart' item.product.id %}">Remove</a>
-        <form action="{% url 'update_cart_item' item.product.id %}" method="post">
-            {% csrf_token %}
-            <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-            <button type="submit">Update</button>
-        </form>
-    </li>
-    {% endfor %}
-</ul>
-<p>Total: ${{ cart.get_total_price }}</p>
-{% endif %}
