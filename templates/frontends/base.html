@@ -41,29 +41,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script src="{% static 'assets/pages/sweetalert2.min.js' %}"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css" />
 </head>
 
 <body class="animsition">
 
-    {% if messages %}
-    {% for message in messages %}
-    {% if message.tags == "error" %}
-    <script type="text/javascript">
-        $(document).ready(function (e) {
-
-            show_message("{{ message }}", 'error');
-        });
-    </script>
-    {% else %}
-    <script type="text/javascript">
-        $(document).ready(function (e) {
-
-            show_message("{{ message }}", 'success');
-        });
-    </script>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
     <!-- Header -->
     <header>
         <!-- Header desktop -->
@@ -83,6 +69,9 @@
                         {% if user.is_authenticated %}
                         <a href="{% url 'home.logout_user' %}" class="flex-c-m trans-04 p-lr-25">
                             Logout
+                        </a>
+                        <a href="{% url 'home.profile' %}" class="flex-c-m trans-04 p-lr-25">
+                            Profile
                         </a>
                         {% else %}
                         <a href="{% url 'home.login_user' %}" class="flex-c-m trans-04 p-lr-25">
@@ -786,6 +775,25 @@
             $('.fancybox-buttons').magnificPopup({ type: 'image' });
         });
     </script>
+
+    // Alertify JavaScript
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "error" %}
+    <script>
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.error("{{ message }}", 'error');
+    </script>
+    {% else %}
+    <script>
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.success("{{ message }}", 'success');
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 
 </body>
 

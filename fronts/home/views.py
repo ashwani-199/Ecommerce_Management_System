@@ -8,50 +8,122 @@ from apps.users.models import User
 from django.contrib.auth.hashers import make_password
 from fronts.home.models import Cart, CartItem
 from django.contrib.auth.decorators import login_required
+from fronts.home.forms import ProfileEditForm, LoginForm
+from apps.users.forms import UserAddForm
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 
 
 def register_user(request):
-    if request.method == "POST":
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+    if request.method == 'POST':
+        form = UserAddForm(request.POST or None)
+        if form.is_valid():
+            users = User()
+            users.user_role_id = 2
+            users.username = form.cleaned_data["username"]
+            users.first_name =form.cleaned_data["first_name"]
+            users.last_name = form.cleaned_data["last_name"]
+            users.email = form.cleaned_data["email"]
+            users.password = make_password(form.cleaned_data["password"])
+            users.is_staff = True
+            subject = 'Welcome to Registration Account.'
+            message = f'Hi {users.username}, Thank you for Registration Account in Acuity Fashion Management System.'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [users.email, ]
+            send_mail( subject, message, email_from, recipient_list )
+            users.save()
+            messages.success(request, "Your account is registered successfully")
+            return redirect("home.login_user")
+        
+        
+        else:
+            for field in form.errors:
+                form[field].field.widget.attrs['class'] += ' is-invalid'
 
-        users = User()
-        users.user_role_id = 3
-        users.first_name = first_name
-        users.last_name = last_name
-        users.email = email
-        users.password = make_password(password)
-        users.is_staff = False
-        users.save()
-        messages.success(request, 'Customer is register successfully.')
-        return redirect('home.index')
+    else:
+        form = UserAddForm()
 
-    return render(request, 'frontends/register.html')
+
+    context = {
+        "form": form,
+    }
+
+    return render(request, 'frontends/register.html', context)
 
 def login_user(request):
+    if request.method == "GET":
+        nextUrl = request.GET.get('next', None)
+        request.session['next_url'] = nextUrl
+
+    if request.user.is_authenticated:
+        return redirect('index')
+    
     if request.method == "POST":
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
 
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-            messages.success(request, 'Customer is login successfully.')
-            return redirect('home.index')
+                messages.success(request, "You are now logged in")
+                return redirect('home.index')
+            else:
+                messages.error(request, "Invalid Credentials")
+                return redirect("home.login_user")
         else:
-            messages.error(request, 'Invalid Credentials')
-            return redirect('home.login_user')
+            for field in form.errors:
+                form[field].field.widget.attrs['class'] += ' is-invalid'
 
-    return render(request, 'frontends/login.html')
+    else:
+        form = LoginForm()
+
+    context = {
+        "form": form
+    }
+
+    return render(request, 'frontends/login.html', context)
 
 def user_logout(request):
     logout(request)
     messages.success(request, "You are now logged out")
     return redirect('home.login_user')
 
+
+@login_required(login_url='login')
+def profile(request):
+    userDetail = User.objects.filter(id=request.user.id, is_active=True, is_delete=False).first()
+    if not userDetail:
+        return redirect('home.profile')
+    initialDict = {
+        "email": userDetail.email,
+        "username": userDetail.username,
+        "first_name": userDetail.first_name,
+        "last_name": userDetail.last_name,
+        "image": userDetail.image,
+        "gender":userDetail.gender,        
+           
+}
+    form = ProfileEditForm(initial=initialDict)
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES, instance=userDetail)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile has been updated successfully")
+            return redirect('home.index')
+        
+        else:
+            for field in form.errors:
+                form[field].field.widget.attrs['class'] += ' is-invalid'
+        
+    context = {
+        "form": form,
+        "show_image": userDetail.image
+    }
+    return render(request, "frontends/profile.html", context)
 
 
 def category(request, foo):
