@@ -36,14 +36,15 @@
                     {% elif field.name == 'image' %}
                     <div class="bor8 m-b-20 how-pos4-parent">
                         {{field}}
-                        <!-- <img src="{{show_image.url}}" width="200" height="200" alt="image"> -->
                     </div>
+                    {% if show_image %}
                     <div class="card" style="width: 18rem;">
                         <img src="{{show_image.url}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <p class="card-text">Current Profile Image</p>
                         </div>
                     </div>
+                    {% endif %}
                     {% if field.errors %}
                     <div class="alert alert-danger">
                         <strong>{{field.errors}}</strong>

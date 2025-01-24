@@ -52,17 +52,17 @@ class UserAddForm(forms.ModelForm):
                    'placeholder': 'Password'}),
         error_messages={
             'required': "The password field is required.",
-            'min_value': "The confirm password should contains at least 8 digits",
+            'min_value': "The password should contains at least 8 digits",
         }
     )
     confirm_password = forms.CharField(
         required=False,
-        label='Confire Password',
+        label='Confirm Password',
         widget=forms.PasswordInput(
             attrs={'class': "form-control",
                    'placeholder': 'Confire Password'}),
         error_messages={
-            'required': "The confire password field is required.",
+            'required': "The confirm password field is required.",
             'min_value': "The confirm password should contains at least 8 digits",
             'validators': "The confirm password and new password must match"
         }
