@@ -99,7 +99,7 @@ class ProfileEditForm(forms.ModelForm):
 # Forgot Password Form
 class ForgotPasswordForm(forms.Form):
     email = forms.EmailField(
-        required=True,
+        required=False,
         label='Email',
         widget=forms.TextInput(
             attrs={'class': "form-control",

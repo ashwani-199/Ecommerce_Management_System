@@ -63,11 +63,11 @@ def user_register(request):
             users.email = form.cleaned_data["email"]
             users.password = make_password(form.cleaned_data["password"])
             users.is_staff = True
-            subject = 'Welcome to Registration Account.'
-            message = f'Hi {users.username}, Thank you for Registration Account in Acuity Fashion Management System.'
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [users.email, ]
-            send_mail( subject, message, email_from, recipient_list )
+            # subject = 'Welcome to Registration Account.'
+            # message = f'Hi {users.username}, Thank you for Registration Account in Acuity Fashion Management System.'
+            # email_from = settings.EMAIL_HOST_USER
+            # recipient_list = [users.email, ]
+            # send_mail( subject, message, email_from, recipient_list )
             users.save()
             messages.success(request, Messages.YOUR_ACCOUNT_IS_REGISTRATED_SUCCESSFULLY.value)
             return redirect("login")

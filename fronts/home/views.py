@@ -8,8 +8,7 @@ from apps.users.models import User
 from django.contrib.auth.hashers import make_password
 from fronts.home.models import Cart, CartItem
 from django.contrib.auth.decorators import login_required
-from fronts.home.forms import ProfileEditForm, LoginForm
-from apps.users.forms import UserAddForm
+from fronts.home.forms import ProfileEditForm, LoginForm, UserAddForm
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -21,17 +20,17 @@ def register_user(request):
         form = UserAddForm(request.POST or None)
         if form.is_valid():
             users = User()
-            users.user_role_id = 2
+            users.user_role_id = 3
             users.username = form.cleaned_data["username"]
             users.first_name =form.cleaned_data["first_name"]
             users.last_name = form.cleaned_data["last_name"]
             users.email = form.cleaned_data["email"]
             users.password = make_password(form.cleaned_data["password"])
             users.is_staff = True
-            # subject = 'Welcome to Registration Account.'
-            # message = f'Hi {users.username}, Thank you for Registration Account in Acuity Fashion Management System.'
-            # email_from = settings.EMAIL_HOST_USER
-            # recipient_list = [users.email, ]
+            subject = 'Welcome to Registration Account.'
+            message = f'Hi {users.username}, Thank you for Registration Account in Acuity Fashion Management System.'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [users.email, ]
             # send_mail( subject, message, email_from, recipient_list )
             users.save()
             messages.success(request, "Your account is registered successfully")
