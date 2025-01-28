@@ -6,10 +6,6 @@ This project is a full-stack ecommerce management system that includes a custom 
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Folder Structure](#folder-structure)
-- [API Endpoints](#api-endpoints)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
@@ -52,3 +48,7 @@ This project is a full-stack ecommerce management system that includes a custom 
 Ensure that you have the following installed:
 - Python 
 - MySQL, Postgresql
+
+## license
+This README file provides an overview of the system's features, tech stack, installation instructions, usage guidelines, and other important details. Feel free to adjust it according to your specific project structure and requirements!
+
