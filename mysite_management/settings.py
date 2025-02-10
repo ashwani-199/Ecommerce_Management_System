@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-()h$_#vz3g&sfdfq!fzb8adsb@=&ptz$sl8#d7^6%=_pau2)q!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -132,27 +132,27 @@ USE_I18N = True
 
 USE_TZ = True
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-   "http://localhost:3000",
-    "http://127.0.0.1:3000",
-)
+# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = False
+# CORS_ORIGIN_WHITELIST = (
+#    "http://localhost:3000",
+#     "http://127.0.0.1:3000",
+# )
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static'
+# ]
+STATIC_ROOT = BASE_DIR /'static'
 
-
-# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-# EMAIL_HOST = "smtp.gmail.com"  
-# EMAIL_PORT = 587       
-# EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")  
-# EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
-# EMAIL_USE_TLS = True   
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"  
+EMAIL_PORT = 587       
+EMAIL_HOST_USER = "technogyan375@gmail.com"
+EMAIL_HOST_PASSWORD = "oatm stem lwhx vgsh"
+EMAIL_USE_TLS = True   
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
