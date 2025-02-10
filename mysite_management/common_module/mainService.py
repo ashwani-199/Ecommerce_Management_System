@@ -6,6 +6,7 @@ import time
 import enum
 from django.utils.translation import gettext as _
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.shortcuts import render
 
 
 PROTOCOL = 'http://'
@@ -68,3 +69,21 @@ class MainService:
             fields[field].error_messages["blank"] = MainMessages.the.value + ' ' + \
                                                     field.replace('_', ' ') + ' ' + \
                                                     MainMessages.field_is_required.value.lower()
+
+
+    @staticmethod
+    def error_404(request, exception):
+        data = {}
+        return render(request, 'errors/404.html', data)
+
+    @staticmethod
+    def error_500(request, *args, **argv):
+        return render(request, 'errors/500.html', status=500)
+
+    @staticmethod
+    def error_400(request, *args, **argv):
+        return render(request, 'errors/400.html', status=400)
+
+    @staticmethod
+    def error_403(request, *args, **argv):
+        return render(request, 'errors/403.html', status=403)

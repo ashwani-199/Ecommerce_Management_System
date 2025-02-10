@@ -27,11 +27,7 @@ class Carts():
         
         self.session.modified = True
 
-        # if self.request.user.is_authenticated:
-        #     current_user = User.objects.get(id=self.request.user.id)
-        #     carty = Cart.objects.create(user=current_user, product=product, quantity=quantity, item_total=product.price)
-        #     carty.save()
-
+    
     def cart_total(self):
         product_ids = self.cart.keys()
 
