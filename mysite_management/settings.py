@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.customers',
 
     'fronts.home',
+    'fronts.contact',
 
     'rest_framework',
     'corsheaders',

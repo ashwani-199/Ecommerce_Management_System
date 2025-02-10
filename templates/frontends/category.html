@@ -13,6 +13,7 @@
 <section class="bg0 p-t-23 p-b-140">
     <div class="container">
         <div class="row isotope-grid">
+            {% if products %}
             {% for productObj in products %}
             {% if productObj.is_sale %}
             <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item men">
@@ -102,6 +103,9 @@
             </div>
             {% endif %}
             {% endfor %}
+            {% else %}
+            No Products Found
+            {% endif %}
         </div>
 
         <!-- Load more -->

@@ -10,7 +10,7 @@
 					<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
 						<div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
 							<span class="ltext-101 cl2 respon2">
-								Women Collection 2018
+								Women Collection 2025
 							</span>
 						</div>
 
@@ -60,7 +60,7 @@
 					<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
 						<div class="layer-slick1 animated visible-false" data-appear="rotateInDownLeft" data-delay="0">
 							<span class="ltext-101 cl2 respon2">
-								Men Collection 2018
+								Men Collection 2025
 							</span>
 						</div>
 
@@ -90,7 +90,7 @@
 				<!-- Block1 -->
 				<div class="block1 wrap-pic-w">
 					<img src="{% static 'fronts/images/banner-01.jpg' %}" alt="IMG-BANNER">
-					<a href="{% url 'home.products_item' %}"
+					<a href="{% url 'home.category' 'Women' %}"
 						class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 						<div class="block1-txt-child1 flex-col-l">
 							<span class="block1-name ltext-102 trans-04 p-b-8">
@@ -98,7 +98,7 @@
 							</span>
 
 							<span class="block1-info stext-102 trans-04">
-								Spring 2018
+								Spring 2025
 							</span>
 						</div>
 						<div class="block1-txt-child2 p-b-4 trans-05">
@@ -123,7 +123,7 @@
 							</span>
 
 							<span class="block1-info stext-102 trans-04">
-								Spring 2018
+								Spring 2025
 							</span>
 						</div>
 
@@ -141,7 +141,7 @@
 				<div class="block1 wrap-pic-w">
 					<img src="{% static 'fronts/images/banner-03.jpg' %}" alt="IMG-BANNER">
 
-					<a href="{% url 'home.products_item' %}"
+					<a href="{% url 'home.category' 'Accessories' %}"
 						class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
 						<div class="block1-txt-child1 flex-col-l">
 							<span class="block1-name ltext-102 trans-04 p-b-8">
@@ -214,12 +214,6 @@
 								&nbsp;&nbsp;Sale&nbsp;&nbsp;
 								<div class="zmdi zmdi-star"></div>
 							</div>
-							<!-- <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-								<img class="icon-heart1 dis-block trans-04"
-									src="{% static 'fronts/images/icons/icon-heart-01.png' %}" alt="ICON">
-								<img class="icon-heart2 dis-block trans-04 ab-t-l"
-									src="{% static 'fronts/images/icons/icon-heart-02.png' %}" alt="ICON">
-							</a> -->
 						</div>
 					</div>
 				</div>
@@ -251,12 +245,6 @@
 								<span class="text-primary">{{productObj.stock}}</span>
 
 							</span>
-							<!-- <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-								<img class="icon-heart1 dis-block trans-04"
-									src="{% static 'fronts/images/icons/icon-heart-01.png' %}" alt="ICON">
-								<img class="icon-heart2 dis-block trans-04 ab-t-l"
-									src="{% static 'fronts/images/icons/icon-heart-02.png' %}" alt="ICON">
-							</a> -->
 						</div>
 					</div>
 				</div>

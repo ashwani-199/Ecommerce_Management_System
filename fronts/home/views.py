@@ -178,7 +178,7 @@ def productDetails(request, id):
     product_image = ProductImage.objects.filter(product=productObj)
     product_image1 = Product.objects.all()
 
-    product_review = ProductReview.objects.all()
+    product_review = ProductReview.objects.filter(product=productObj).order_by('-id')
 
     context = {
         'productObj': productObj,
@@ -193,9 +193,7 @@ def productDetails(request, id):
 def shopCart(request):
     return render(request, 'frontends/shoping-cart.html')
 
-def contacts(request):
-    context = {"contact_page": "active"}
-    return render(request, 'frontends/contact.html', context)
+
 
 
 def product_review(request):
@@ -209,7 +207,7 @@ def product_review(request):
 
         product_review = ProductReview()
         product_review.product = product
-        product_review.user = product.user
+        product_review.user = request.user
         product_review.description = review
         product_review.rating = rating
         product_review.save()

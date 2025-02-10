@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin1/', admin.site.urls),
     # path('api/', include('apps.apis.urls')),
     path('admin/', include('apps.login.urls')),
     path('dashboard/', include('apps.dashboard.urls')),
@@ -16,6 +16,7 @@ urlpatterns = [
 
 
     path('', include('fronts.home.urls')),
+    path('', include('fronts.contact.urls')),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
