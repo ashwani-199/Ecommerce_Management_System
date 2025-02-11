@@ -11,7 +11,6 @@ urlpatterns = [
     
     path('category/<str:foo>/', views.category, name='home.category'),
 
-
     path('login/', views.login_user, name='home.login_user'),
     path('register/', views.register_user, name='home.register_user'),
     path('profile/', views.profile, name='home.profile'),
@@ -19,10 +18,12 @@ urlpatterns = [
 
     path('review/', views.product_review, name='home.review'),
 
-
-
     path('cart_detail/', views.cart_detail, name='cart_detail'),
     path('add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('update/<int:product_id>/', views.update_cart_item, name='update_cart_item'),
+
+
+   path('checkout/', views.checkout, name='checkout'),
+   path('order-confirm/<int:order_id>/', views.order_confirmation, name='order_confirmation'),
 ]

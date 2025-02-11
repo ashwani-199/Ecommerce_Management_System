@@ -293,3 +293,23 @@ class UserAddForm(forms.ModelForm):
         elif confirm_password != data.get('password'):
             raise ValidationError(self.fields['confirm_password'].error_messages['validators'])
         return confirm_password
+    
+
+
+class CheckoutForm(forms.Form):
+    shipping_address = forms.CharField(
+        required=False,
+        label='Shipping Address',
+        widget=forms.Textarea(attrs={'class': "stext-111 cl2 plh3 size-116 p-l-62 p-r-30",
+                                      'placeholder': "Your Shipping Address"}),
+        error_messages={
+            'required': "The shipping address field is required"
+        }
+    )
+
+    def clean_shipping_address(self):
+        data = self.cleaned_data
+        shipping_address = data.get('shipping_address')
+        if shipping_address == "" or shipping_address is None:
+            raise ValidationError(self.fields['shipping_address'].error_messages['required'])
+        return shipping_address

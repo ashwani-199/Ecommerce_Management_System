@@ -60,10 +60,16 @@
 					<h4 class="mtext-105 cl2 js-name-detail p-b-14">
 						{{productObj.name}}
 					</h4>
-
+					{% if productObj.is_sale %}
+					<span class="mtext-106 cl2">
+						Rs {{productObj.sale_price}}
+					</span>
+					{% else %}
 					<span class="mtext-106 cl2">
 						Rs {{productObj.price}}
 					</span>
+					{% endif %}
+
 
 					<p class="stext-102 cl3 p-t-23">
 						{{productObj.description|linebreaks }}

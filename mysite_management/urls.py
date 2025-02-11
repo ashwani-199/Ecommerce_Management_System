@@ -20,8 +20,12 @@ urlpatterns = [
     path('', include('fronts.contact.urls')),
 
 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
 
+
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 
 handler404 = MainService.error_404
 handler500 = MainService.error_500

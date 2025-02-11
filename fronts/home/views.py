@@ -8,12 +8,10 @@ from apps.users.models import User
 from django.contrib.auth.hashers import make_password
 from fronts.home.models import Cart, CartItem
 from django.contrib.auth.decorators import login_required
-from fronts.home.forms import ProfileEditForm, LoginForm, UserAddForm
+from fronts.home.forms import ProfileEditForm, LoginForm, UserAddForm, CheckoutForm
 from django.core.mail import send_mail
 from django.conf import settings
-
-
-
+from apps.orders.models import Order, OrderItem
 
 def register_user(request):
     if request.method == 'POST':
@@ -271,3 +269,47 @@ def update_cart_item(request, product_id):
             cart_item.delete()
 
     return redirect('cart_detail')
+
+
+
+@login_required
+def checkout(request):
+    cart = Cart.objects.get(user=request.user)
+    cart_items = CartItem.objects.filter(cart=cart)
+    
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            # Create Order
+            order = Order.objects.create(
+                customer=request.user,
+                shipping_address=form.cleaned_data['shipping_address'],
+                total_amount=cart.get_total_price(),  # Implement total_price method in Cart
+                status='Pending'
+            )
+            
+            # Create OrderItems from CartItems
+            for item in cart_items:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    quantity=item.quantity,
+                    total_price=item.product.price
+                )
+            
+            # Clear the cart
+            cart_items.delete()
+            return redirect('order_confirmation', order_id=order.id)
+        else:
+            for field in form.errors:
+                form[field].field.widget.attrs['class'] += ' is-invalid'
+        
+    else:
+        form = CheckoutForm()
+    
+    return render(request, 'frontends/checkout.html', {'form': form, 'cart_items': cart_items})
+
+def order_confirmation(request, order_id):
+    order = Order.objects.get(id=order_id)
+    order_items = OrderItem.objects.filter(order=order)
+    return render(request, 'frontends/order_confirmation.html', {'order': order, 'order_items': order_items})
