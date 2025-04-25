@@ -3,9 +3,24 @@
 {% load static %}
 
 <head>
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %} | Buy Best Products Online</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Shop the best products online at Acuity Fashion. Great deals on electronics, fashion, home appliances & more. Fast delivery & secure checkout.">
+    <meta name="keywords" content="ecommerce, online store, buy online, deals, electronics, fashion, appliances">
+    <meta name="author" content="Acuity Fashion">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Acuity Fashion | Buy Best Products Online">
+    <meta property="og:description"
+        content="Shop quality products online at Acuity Fashion. Unbeatable prices, fast shipping.">
+    <meta property="og:image" content="{{ request.build_absolute_url }}static/images/logo.png">
+    <meta property="og:url" content="{{ request.build_absolute_url }}">
+    <meta property="og:type" content="website">
+
+    <link rel="canonical" href="{{ request.build_absolute_url }}">
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="{% static 'fronts/images/icons/favicon.png' %}" />
     <!--===============================================================================================-->
