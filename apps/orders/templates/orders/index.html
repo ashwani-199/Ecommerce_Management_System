@@ -22,25 +22,18 @@
             <div class="col-xl-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <a href="{% url 'orders.add' %}">
+                        <a href="#">
                             <h4 class="btn btn-primary mt-0 header-title mb-4">Add {{singular_name}}</h4>
                         </a>
-                        <!-- <div class="text-right">
-                            <a href="{% url 'orders.add_category' %}">
-                                <h4 class="btn btn-primary mt-0 header-title mb-4">Add Category</h4>
-                            </a>
-                        </div> -->
-
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Stock</th>
-                                        <th scope="col">Category</th>
+                                        <th scope="col">Customer Name</th>
+                                        <th scope="col">Amount</th>
+                                        <th scope="col">Shipping Address</th>
+                                        <th scope="col">Order Date</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Created Date</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -50,28 +43,30 @@
                                     {% for product in page_obj %}
 
                                     <tr>
-                                        <td>{{product.user}}</td>
-                                        <td>{{product.name}}</td>
-                                        <td>{{product.description}}</td>
-                                        <td>{{product.price}}</td>
-                                        <td><span class="badge badge-success">{{product.stock}}</span></td>
-                                        <td>{{product.categories}}</td>
+                                        <td>{{product.customer}}</td>
+                                        <td>{{product.total_amount}}</td>
+                                        <td>{{product.shipping_address}}</td>
+                                        <td>{{product.order_date | date:'d-M-Y' }}</td>
+                                        {% if status == 'Pending' %}
+                                        <td><span class="badge badge-pill">{{product.status}}</span></td>
+                                        {% elif status == 'Order Confirmed' %}
+                                        <td><span class="badge badge-success">{{product.status}}</span></td>
+                                        {% else %}
+                                        <td><span class="badge badge-warning">{{product.status}}</span></td>
+                                        {% endif %}
                                         <td>{{product.created_at | date:'d-M-Y' }}</td>
 
                                         <td>
                                             <span>
-                                                <a href="{% url 'product.edit' product.id %}"
-                                                    class="btn btn-primary btn-sm">Edit
+                                                <a href="#" class="btn btn-primary btn-sm">Edit
                                                 </a>
                                             </span>
                                             <span>
-                                                <a href="{% url 'product.view' product.id %}"
-                                                    class="btn btn-success btn-sm">View
+                                                <a href="#" class="btn btn-success btn-sm">View
                                                 </a>
                                             </span>
                                             <span>
-                                                <a href="{% url 'product.delete' product.id %}"
-                                                    class="btn btn-danger btn-sm confirmDelete">Delete
+                                                <a href="#" class="btn btn-danger btn-sm confirmDelete">Delete
                                                 </a>
                                             </span>
                                         </td>

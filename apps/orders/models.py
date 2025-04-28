@@ -1,8 +1,8 @@
 from django.db import models
 from apps.product.models import Product
 from apps.users.models import User
-# from apps.shipping_cart.models import Cart
 
+ 
 STATUS =(
         ('Pending','Pending'),
         ('Order Confirmed','Order Confirmed'),
@@ -20,7 +20,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Total amount#{self.total_amount} for order #{self.id}"
+        return f"Total amount #{self.total_amount} for order #{self.id}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

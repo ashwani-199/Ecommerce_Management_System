@@ -8,12 +8,12 @@ urlpatterns = [
     path('admin1/', admin.site.urls),
     # path('api/', include('apps.apis.urls')),
     path('admin/', include('apps.login.urls')),
-    path('dashboard/', include('apps.dashboard.urls')),
-    path('users/', include('apps.users.urls')),
-    path('customers/', include('apps.customers.urls')),
-    path('products/', include('apps.product.urls')),
-    path('orders/', include('apps.orders.urls')),
-    path('shipping-cart/', include('apps.shipping_cart.urls')),
+    path('admin/dashboard/', include('apps.dashboard.urls')),
+    path('admin/users/', include('apps.users.urls')),
+    path('admin/customers/', include('apps.customers.urls')),
+    path('admin/products/', include('apps.product.urls')),
+    path('admin/orders/', include('apps.orders.urls')),
+    path('admin/shipping-cart/', include('apps.shipping_cart.urls')),
 
 
     path('', include('fronts.home.urls')),
