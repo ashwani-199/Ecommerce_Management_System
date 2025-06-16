@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from apps.orders.models import Order, OrderItem, OrderHistory
+from apps.orders.form import OrderForm
 from django.contrib import messages
 
 
@@ -26,114 +27,29 @@ def index(request):
     }
     return render(request, 'orders/index.html', context)
 
-# @login_required(login_url='login')
-# def addProduct(request):
-#     if request.method == 'POST':
-#         form = ProductForm(request.POST or None)
-#         formSet = ImageForm(request.POST,  request.FILES)
-#         if form.is_valid() and formSet.is_valid():
-#             formData = formSet.cleaned_data
-#             image = formData.get("image")
-#             product = Product()
-#             product.user = request.user
-#             product.categories =form.cleaned_data["categories"]
-#             product.name = form.cleaned_data["name"]
-#             product.description = form.cleaned_data["description"]
-#             product.price = form.cleaned_data["price"]
-#             product.brand_name = form.cleaned_data["brand_name"]
-#             product.save()
+@login_required(login_url='login')
+def edit(request, id):
+    order = Order.objects.get(id=id)
+    if not order:
+        return redirect('orders.index')
+    initialDict = {
+        "customer" : order.customer,
+        "total_amount" : order.total_amount,
+        "status": order.status,
+        "shipping_address": order.shipping_address
 
-#             productImage = ProductImage()
-#             productImage.product = product
-#             productImage.image = image
-#             productImage.save()
-#             return redirect("product.index")
-
-#     else:
-#         form = ProductForm()
-#         formSet = ImageForm()
-#     context = {
-#         "form": form,
-#         'formSet':formSet,
-#         'singular_name': SINGULAR_NAME,
-#         'plural_name': PLURAL_NAME,
-#     }
-#     return render(request, 'product/add.html', context)
-
-# @login_required(login_url='login')
-# def edit(request, id):
-#     product = Product.objects.get(id=id)
-#     product_image = ProductImage.objects.filter(product=product)
-#     if not product:
-#         return redirect('product.index')
-#     initialDict = {
-#         "name": product.name,
-#         "description": product.description,
-#         "price": product.price,
-#         "brand_name": product.brand_name,
-#         "categories": product.categories
-#     }
-#     form = ProductForm(initial=initialDict)
-#     if request.method == "POST":
-#         form = ProductForm(request.POST, instance=product)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, "you are now logged in")
-#             return redirect('product.index')
-
-#     context = {
-#         'form': form,
-#         'product_data': product,
-#         'product_image':product_image,
-#         'singular_name': SINGULAR_NAME,
-#         'plural_name': PLURAL_NAME,
-#     }
-#     return render(request, 'product/edit.html', context)
-
-
-# @login_required(login_url='login')
-# def view(request, id):
-#     product = Product.objects.get(id=id)
-#     product_image = ProductImage.objects.filter(product=product)
-
-#     if not product:
-#         return redirect('product.index')
-
-#     context = {
-#         'product_data': product,
-#         'product_image':product_image,
-#         'singular_name': SINGULAR_NAME,
-#         'plural_name': PLURAL_NAME,
-#     }
-
-#     return render(request, 'product/view.html', context)
-
-
-# @login_required(login_url='login')
-# def delete(request, id):
-#     product = Product.objects.get(id=id)
-#     if not product:
-#         return redirect('product.index')
-#     product.delete()
-#     return redirect('product.index')
-
-
-
-# @login_required(login_url='login')
-# def addCategory(request):
-#     if request.method == 'POST':
-#         form = CategoryForm(request.POST or None)
-#         if form.is_valid():
-#             product_category = ProductCategory()
-#             product_category.name = form.cleaned_data["name"]
-#             product_category.save()
-#             return redirect("product.index")
-
-#     else:
-#         form = CategoryForm()
-#     context = {
-#         "form": form,
-#         'singular_name': 'Category',
-#         'plural_name': 'Categories',
-#     }
-#     return render(request, 'product/category.html', context)
+    }
+    form = OrderForm(initial=initialDict)
+    if request.method == "POST":
+        form = OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Order has been updated successfully.")
+            return redirect('orders.index')
+    context = {
+        'form': form,
+        'order': order,
+        'singular_name': SINGULAR_NAME,
+        'plural_name': PLURAL_NAME,
+    }
+    return render(request, 'orders/edit.html', context)
