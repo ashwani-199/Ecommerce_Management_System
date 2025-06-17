@@ -71,6 +71,15 @@
 					{% endif %}
 
 
+					<p>Review Rating</p>
+					<span class="fs-18 cl11">
+						{% with ''|center:product_rev.rating as range %}
+						{% for i in range %}
+						<i class="zmdi zmdi-star">{{i}}</i>
+						{% endfor %}
+						{% endwith %}
+					</span>
+
 					<p class="stext-102 cl3 p-t-23">
 						{{productObj.description|linebreaks }}
 					</p>

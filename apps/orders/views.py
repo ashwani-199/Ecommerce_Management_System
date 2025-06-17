@@ -53,3 +53,21 @@ def edit(request, id):
         'plural_name': PLURAL_NAME,
     }
     return render(request, 'orders/edit.html', context)
+
+@login_required(login_url='login')
+def order_item_index(request):
+    DB = OrderItem.objects.filter().order_by('-id')
+    
+    totalRecord = DB.count()
+    paginator = Paginator(DB, 2)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'page_obj':page_obj,
+        'totalRecord': totalRecord,
+        'users_obj': DB,
+        'singular_name': "Order Item",
+        'plural_name': "Order Items",
+    }
+    return render(request, 'orderItem/index.html', context)
