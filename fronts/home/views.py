@@ -138,20 +138,14 @@ def category(request, foo):
 
 def index(request):
     products = Product.objects.all()
-    if request.method == 'POST':
-        product_id = request.POST.get('product_id')
-        productObj = Product.objects.get(id=int(product_id))
-        product_Image = ProductImage.objects.filter(product=productObj).values()
-        productSerializers = ProductSerializers(productObj)
-        contextObj = {
-            'product': productSerializers.data,
-            'product_Image': list(product_Image)
-        }
-        return JsonResponse(contextObj)
+        
+    product_review = ProductReview.objects.all()
+
     
     context = {
         "home_page": "active",
         "products": products,
+        "product_review": product_review,
     }
     return render(request, 'frontends/index.html', context)
 
@@ -177,12 +171,18 @@ def productDetails(request, id):
     product_image1 = Product.objects.all()
 
     product_review = ProductReview.objects.filter(product=productObj).order_by('-id')
+    
+    product_rev = ProductReview.objects.get(id=productObj.id)
+    # product_rev = get_object_or_404(ProductReview, pk=productObj.id)
+    if not product_rev:
+        return redirect('home.product_details')
 
     context = {
         'productObj': productObj,
         'product_image': product_image,
         'product_image1':product_image1,
         'product_review': product_review,
+        'product_rev': product_rev,
     }
     return render(request, 'frontends/product-detail.html', context)
 

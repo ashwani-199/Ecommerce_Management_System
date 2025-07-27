@@ -10,7 +10,6 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-right">
-                        <li class="breadcrumb-item"><a href="javascript:void(0);">Stexo</a></li>
                         <li class="breadcrumb-item"><a href="{% url 'orders.index' %}">{{plural_name}}</a></li>
                         <li class="breadcrumb-item active">All {{plural_name}}</li>
                     </ol>
@@ -29,12 +28,11 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Customer Name</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">Shipping Address</th>
-                                        <th scope="col">Order Date</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Order Address</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total Price</th>
                                         <th scope="col">Status</th>
-                                        <th scope="col">Created Date</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -43,24 +41,18 @@
                                     {% for product in page_obj %}
 
                                     <tr>
-                                        <td>{{product.customer}}</td>
-                                        <td>{{product.total_amount}}</td>
-                                        <td>{{product.shipping_address}}</td>
-                                        <td>{{product.order_date | date:'d-M-Y' }}</td>
-                                        {% if product.status == 'Pending' %}
-                                        <td><span class="badge badge-info">{{product.status}}</span></td>
-                                        {% elif product.status == 'Order Confirmed' %}
-                                        <td><span class="badge badge-success">{{product.status}}</span></td>
+                                        <td>{{product.product}}</td>
+                                        <td>{{product.order.shipping_address}}</td>
+                                        <td>{{product.quantity}}</td>
+                                        <td>{{product.total_price }}</td>
+                                        {% if product.order.status == 'Pending' %}
+                                        <td><span class="badge badge-info">{{product.order.status}}</span></td>
+                                        {% elif product.order.status == 'Order Confirmed' %}
+                                        <td><span class="badge badge-success">{{product.order.status}}</span></td>
                                         {% else %}
-                                        <td><span class="badge badge-warning">{{product.status}}</span></td>
+                                        <td><span class="badge badge-warning">{{product.order.status}}</span></td>
                                         {% endif %}
-                                        <td>{{product.created_at | date:'d-M-Y' }}</td>
-
                                         <td>
-                                            <span>
-                                                <a href="{% url 'orders.edit' product.id %}" class="btn btn-primary btn-sm">Edit
-                                                </a>
-                                            </span>
                                             <span>
                                                 <a href="#" class="btn btn-success btn-sm">View
                                                 </a>
