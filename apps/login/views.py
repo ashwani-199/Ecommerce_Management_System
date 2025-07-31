@@ -8,7 +8,7 @@ from django.contrib.auth.hashers import make_password
 from django.shortcuts import redirect, render
 from .form import LoginForm, ProfileEditForm, ForgotPasswordForm, PasswordRestForm
 from apps.users.models import User
-from apps.users.forms import UserAddForm
+from apps.login.form import RegisterForm
 from mysite_management.common_module.mainService import MainService
 from mysite_management.common_module.validationMessage import Messages
 from django.core.mail import send_mail
@@ -53,7 +53,7 @@ def user_login(request):
 
 def user_register(request):
     if request.method == 'POST':
-        form = UserAddForm(request.POST or None)
+        form = RegisterForm(request.POST or None)
         if form.is_valid():
             users = User()
             users.user_role_id = 2
@@ -78,7 +78,7 @@ def user_register(request):
                 form[field].field.widget.attrs['class'] += ' is-invalid'
 
     else:
-        form = UserAddForm()
+        form = RegisterForm()
     context = {
         "form": form,
     }

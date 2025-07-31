@@ -52,9 +52,10 @@
                         <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#"
                             role="button" aria-haspopup="false" aria-expanded="false">
                             <img src="{% static 'assets/images/flags/us_flag.jpg' %}" class="mr-2" height="12" alt="" />
-                            English <span class="mdi mdi-chevron-down"></span>
+                            English
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated language-switch">
+                        <!-- <span class="mdi mdi-chevron-down"></span> -->
+                        <!-- <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated language-switch">
                             <a class="dropdown-item" href="#"><img
                                     src="{% static 'assets/images/flags/french_flag.jpg' %}" alt="" height="16" /><span>
                                     French </span></a>
@@ -70,7 +71,7 @@
                             <a class="dropdown-item" href="#"><img
                                     src="{% static 'assets/images/flags/italy_flag.jpg' %}" alt="" height="16" /><span>
                                     Italian </span></a>
-                        </div>
+                        </div> -->
                     </li>
 
                     <!-- full screen -->
@@ -228,18 +229,18 @@
                         <li>
 
                             <a href="{% url 'staff.users' %}" class="waves-effect"><i
-                                    class="fa-regular fa-user"></i><span>
-                                    Staffs Managements </span></a>
+                                    class="icon-graph"></i><span><span>
+                                        Staffs Managements </span></a>
                         </li>
 
                         <li>
                             <a href="{% url 'customer.index' %}" class="waves-effect"><i
-                                    class="icon-paper-sheet"></i><span>Customers
+                                    class="icon-todolist-check"></i><span>Customers
                                 </span></a>
                         </li>
 
                         <li>
-                            <a href="#" class="waves-effect"><i class="icon-paper-sheet"></i><span>
+                            <a href="#" class="waves-effect"><i class="icon-diamond"></i><span>
                                     Product Manage <span class="float-right menu-arrow"><i
                                             class="mdi mdi-chevron-right"></i></span> </span></a>
                             <ul class="submenu">

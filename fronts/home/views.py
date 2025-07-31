@@ -172,10 +172,10 @@ def productDetails(request, id):
 
     product_review = ProductReview.objects.filter(product=productObj).order_by('-id')
     
-    product_rev = ProductReview.objects.get(id=productObj.id)
-    # product_rev = get_object_or_404(ProductReview, pk=productObj.id)
-    if not product_rev:
-        return redirect('home.product_details')
+    try:
+        product_rev = ProductReview.objects.get(id=productObj.id)
+    except ProductReview.DoesNotExist:
+        product_rev = None
 
     context = {
         'productObj': productObj,
