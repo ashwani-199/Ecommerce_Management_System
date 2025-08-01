@@ -1,5 +1,6 @@
 from django.db import models
 from apps.users.models import User
+from django.db.models import Avg
 
 
 
@@ -25,8 +26,20 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def get_discount_price(self):
+        if self.is_sale > 0:
+            discount_amount = (self.price * self.is_sale) / 100
+            return self.price - discount_amount
+        return self.price
+
     def __str__(self):
         return self.name
+    
+    @property
+    def average_rating(self):
+        avg = ProductReview.objects.filter(product=self).aggregate(Avg('rating'))['rating__avg']
+        return round(avg, 1) if avg else 0
     
 class ProductReview(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

@@ -139,8 +139,7 @@ def category(request, foo):
 def index(request):
     products = Product.objects.all()
         
-    product_review = ProductReview.objects.all()
-
+    product_review = ProductReview.objects.filter(rating=5)
     
     context = {
         "home_page": "active",
