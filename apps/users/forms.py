@@ -7,7 +7,7 @@ class UserAddForm(forms.ModelForm):
         required=False,
         label='Username',
         widget=forms.TextInput(
-            attrs={'class': "form-control ",
+            attrs={'class': "form-control",
                    'placeholder': 'Username'}),
         error_messages={
             'required': "The username field is required."
@@ -80,9 +80,25 @@ class UserAddForm(forms.ModelForm):
             'maximum': "The mobile number maximum",
         }
     )
+    is_active = forms.BooleanField(
+        required=False,
+        label='Active',
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+    image = forms.ImageField(
+        required=False,
+        label='Image',
+        widget=forms.FileInput(
+            attrs = {
+                "id" : "formFile",  
+                'class': "form-control",
+            }
+        )
+    )
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'mobile_number']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'mobile_number', 'is_active', 
+                  'image']
 
     def clean_username(self):
         data = self.cleaned_data
@@ -201,9 +217,25 @@ class UserEditForm(forms.ModelForm):
             'maximum': "The mobile number maximum",
         }
     )
+    is_active = forms.BooleanField(
+        required=False,
+        label='Active',
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'})
+    )
+    image = forms.ImageField(
+        required=False,
+        label='Image',
+        widget=forms.FileInput(
+            attrs = {
+                "id" : "formFile",  
+                'class': "form-control",
+            }
+        )
+    )
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'mobile_number']
+        fields = ['username', 'first_name', 'last_name', 'email', 'mobile_number', 'is_active', 
+                  'image']
 
 
     def clean_username(self):

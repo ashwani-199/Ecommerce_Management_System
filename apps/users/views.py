@@ -31,7 +31,8 @@ def index(request):
 @login_required(login_url='login')
 def add(request):
     if request.method == 'POST':
-        form = UserAddForm(request.POST or None)
+        form = UserAddForm(request.POST, request.FILES)
+        print(form)
         if form.is_valid():
             users = User()
             users.user_role_id = 2
@@ -40,6 +41,7 @@ def add(request):
             users.last_name = form.cleaned_data["last_name"]
             users.email = form.cleaned_data["email"]
             users.mobile_number = form.cleaned_data["mobile_number"]
+            users.image = form.cleaned_data["image"]
             users.password = make_password(form.cleaned_data["password"])
             users.confirm_password = make_password(form.cleaned_data["confirm_password"])
             users.is_staff = True
@@ -63,6 +65,7 @@ def add(request):
 @login_required(login_url='login')
 def edit(request, id):
     user = User.objects.get(id=id)
+    
     if not user:
         return redirect('index')
     initialDict = {
@@ -70,11 +73,13 @@ def edit(request, id):
         "username": user.username,
         "first_name": user.first_name,
         "last_name": user.last_name,
-        "mobile_number": user.mobile_number
+        "mobile_number": user.mobile_number,
+        "is_active": user.is_active,
+        "image": user.image,   
     }
     form = UserEditForm(initial=initialDict)
     if request.method == "POST":
-        form = UserEditForm(request.POST, instance=user)
+        form = UserEditForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, Messages.USER_IS_UPDATED_SUCCESSFULLY.value)

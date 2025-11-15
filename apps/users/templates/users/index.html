@@ -22,12 +22,14 @@
             <div class="col-xl-12">
                 <div class="card m-b-30">
                     <div class="card-body">
-                        <a href="{% url 'staff.add' %}">
-                            <h4 class="btn btn-primary mt-0 header-title mb-4">Add {{singular_name}}</h4>
-                        </a>
+                        <div class="btn-group" role="group" aria-label="Actions">
+                            <a href="{% url 'staff.add' %}">
+                                <h4 class="btn btn-outline-primary btn-m rounded-pill " title="Add {{singular_name}}"><i
+                                        class="fa fa-plus" aria-hidden="true"></i></h4>
+                            </a>
+                        </div>
 
                         <div class="table-responsive">
-
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
@@ -53,28 +55,27 @@
                                             <div>
                                                 <!-- <img src="assets/images/users/user-2.jpg" alt=""
                                             class="thumb-md rounded-circle mr-2"> -->
-                                                {{user.mobile_number}}
+                                            {{user.mobile_number}}
                                             </div>
                                         </td>
                                         <td>Houston, TX 77074</td>
                                         <td>{{user.created_at}}</td>
 
                                         <td>
-                                            <span>
+                                            <div class="btn-group " role="group" aria-label="Actions">
                                                 <a href="{% url 'staff.edit' user.id %}"
-                                                    class="btn btn-primary btn-sm">Edit
+                                                    class="btn btn-outline-primary btn-sm rounded-pill m-1" + title="Edit">
+                                                    <i class="fa fa-edit" aria-hidden="true"></i>
                                                 </a>
-                                            </span>
-                                            <span>
                                                 <a href="{% url 'staff.view' user.id %}"
-                                                    class="btn btn-success btn-sm icon-eye">
+                                                    class="btn btn-outline-success btn-sm rounded-pill m-1" + title="View">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
                                                 </a>
-                                            </span>
-                                            <span>
                                                 <a href="{% url 'staff.delete' user.id %}"
-                                                    class="btn btn-danger btn-sm confirmDelete">Delete
+                                                    class="btn btn-outline-danger btn-sm confirmDelete rounded-pill m-1" title="Delete">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </a>
-                                            </span>
+                                            </div>
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -90,7 +91,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -114,7 +114,24 @@
             });
             e.preventDefault();
         });
+        // Intercept form submits for elements with class .confirmDelete
+        $(document).on('submit', '.confirmDelete', function (e) {
+            e.preventDefault();
+            const form = this;
+            Swal.fire({
+                title: "Are you sure?",
+                text: "This action will delete the record.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it",
+                cancelButtonText: "No, cancel",
+                reverseButtons: true
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
     });
-
 </script>
 {% endblock content %}
