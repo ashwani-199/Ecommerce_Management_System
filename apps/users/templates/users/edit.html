@@ -65,7 +65,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    
+
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="{{ form.mobile_number.id_for_label }}">Contact *</label>
@@ -92,33 +92,24 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="col-8">
-                        <span class="form-control-plaintext font-weight-bolder">
-                            {% if form.image %}
-                            <img src="{{form.image.url}}" alt="" class="thumb-md rounded-circle mr-2">
-                            {% else %}
-                            -
-                            {% endif %}
-                        </span>
-                    </div>
                     <div class="form-group col-md-6">
                         <label for="{{ form.image.id_for_label }}" class="d-block">Profile Image</label>
+
+                        <div class="form-check form-switch">
+                            {{ form.image }}
+                        </div>
+                        <br>
                         <div class="mb-2">
                             <div id="image-preview" class="image-box">
-                                {% if form.image %}
-                                <img id="preview-img" src="{{ form.image.url }}" alt="Profile image"
-                                    data-original="{{ form.image.url }}">
+                                {% if user_data.image %}
+                                <img id="preview-img" src="{{ user_data.image.url }}" alt="Profile image"
+                                    data-original="{{ user_data.image.url }}">
                                 {% else %}
                                 <img id="preview-img" src="{% static 'images/placeholder-avatar.png' %}" alt="Preview"
                                     data-original="{% static 'images/placeholder-avatar.png' %}">
                                 {% endif %}
                             </div>
                         </div>
-
-                        <div class="form-check form-switch">
-                            {{ form.image }}
-                        </div>
-
                         {% if form.image.errors %}
                         <small class="text-danger">{{ form.image.errors.as_text }}</small>
                         {% endif %}
@@ -176,34 +167,33 @@
     }
 </style>
 <script>
-    // ...existing code...
-document.addEventListener('DOMContentLoaded', function () {
-  const input = document.getElementById('{{ form.image.id_for_label }}');
-  const preview = document.getElementById('preview-img');
-  if (!input || !preview) return;
+    document.addEventListener('DOMContentLoaded', function () {
+        const input = document.getElementById('{{ form.image.id_for_label }}');
+        const preview = document.getElementById('preview-img');
+        if (!input || !preview) return;
 
-  // preserve original src
-  preview.dataset.original = preview.dataset.original || preview.src;
+        // preserve original src
+        preview.dataset.original = preview.dataset.original || preview.src;
 
-  input.addEventListener('change', function () {
-    const file = this.files && this.files[0];
-    if (!file) {
-      preview.src = preview.dataset.original;
-      return;
-    }
-    if (!file.type.startsWith('image/')) {
-      alert('Please select an image file.');
-      this.value = '';
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      preview.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-});
-// ...existing code...
+        input.addEventListener('change', function () {
+            const file = this.files && this.files[0];
+            if (!file) {
+                preview.src = preview.dataset.original;
+                return;
+            }
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file.');
+                this.value = '';
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+    
 </script>
 
 

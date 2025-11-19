@@ -13,9 +13,9 @@ PLURAL_NAME = "Staffs"
 
 @login_required(login_url='login')
 def index(request):
-    DB = User.objects.filter(user_role_id=2, is_active=True).order_by('-id')
+    DB = User.objects.filter(user_role_id=2).order_by('-id')
     totalRecord = DB.count()
-    paginator = Paginator(DB, 2)  
+    paginator = Paginator(DB, 5)  # Show 4 users per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -32,7 +32,6 @@ def index(request):
 def add(request):
     if request.method == 'POST':
         form = UserAddForm(request.POST, request.FILES)
-        print(form)
         if form.is_valid():
             users = User()
             users.user_role_id = 2
